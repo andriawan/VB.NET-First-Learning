@@ -3,35 +3,35 @@
 Public Class DBConnection
 
     Private Shared singleton As DBConnection
-    Dim MysqlConn As MySqlConnection
+    Public mysql As MySqlConnection
     Private serverAddress As String
     Private user As String
-    Private password As String
     Private database As String
+    Private password As String
 
     Private Sub New(ByRef connection As MySqlConnection,
                    ByVal server As String, ByVal user As String,
                    ByVal password As String, ByVal database As String)
 
-        MysqlConn = connection
+        mysql = connection
         Me.serverAddress = server
         Me.user = user
         Me.password = password
         Me.database = database
 
-        MysqlConn.ConnectionString = "server=" & Me.serverAddress & ";" _
+        mysql.ConnectionString = "server=" & Me.serverAddress & ";" _
             & "user id=" & Me.user & ";" _
             & "password=" & Me.password & ";" _
             & "database=" & Me.database
 
         Try
-            MysqlConn.Open()
-            Console.WriteLine("Connection Successfully opened")
-            MysqlConn.Close()
+            mysql.Open()
+            Console.WriteLine("Mysql Connection Successfully opened")
+            mysql.Close()
         Catch ex As Exception
             Console.WriteLine("Cannot connect to database: " & ex.Message)
         Finally
-            MysqlConn.Dispose()
+            mysql.Dispose()
         End Try
 
     End Sub
